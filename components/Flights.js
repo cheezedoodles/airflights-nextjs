@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import axios from 'axios'
+import styles from '@/styles/Flights.module.css'
 
 export default function Flights() {
   const API_ENDPOINT = `http://127.0.0.1:3001/api/flights`
@@ -13,14 +14,19 @@ export default function Flights() {
   if (!data) return <div>Loading...</div>
 
   return (
-    <div>
+    <ul>
       {data.map((item) => (
-        <div key={item.flight_id}>
-          {item.flight_id} {item.flight_no} {item.departure_airport} {item.arrival_airport}
-        </div>
-        
-        
+        <li className={styles.item} key={item.flight_id}>
+          <span style={{width: '10%'}}>{item.flight_id}</span>
+          <span style={{width: '10%'}}>{item.flight_no}</span>
+          <span style={{width: '10%'}}>{item.departure_airport}</span>
+          <span style={{width: '10%'}}>{item.arrival_airport}</span>
+          <span style={{width: '10%'}}>{item.status}</span>
+          <span style={{width: '10%'}}>{item.aircraft_code}</span>
+          <span style={{width: '20%'}}>{item.actual_departure || 'NOT DEPARTED YET'}</span>
+          <span style={{width: '20%'}}>{item.actual_arrival || 'NOT ARRIVED YET'}</span>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
