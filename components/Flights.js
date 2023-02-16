@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 import axios from 'axios'
 import styles from '@/styles/Flights.module.css'
+import Date from './Date'
 
 export default function Flights() {
   const API_ENDPOINT = `http://127.0.0.1:3001/api/flights`
@@ -17,14 +18,21 @@ export default function Flights() {
     <ul>
       {data.map((item) => (
         <li className={styles.item} key={item.flight_id}>
-          <span style={{width: '10%'}}>{item.flight_id}</span>
           <span style={{width: '10%'}}>{item.flight_no}</span>
           <span style={{width: '10%'}}>{item.departure_airport}</span>
           <span style={{width: '10%'}}>{item.arrival_airport}</span>
           <span style={{width: '10%'}}>{item.status}</span>
           <span style={{width: '10%'}}>{item.aircraft_code}</span>
-          <span style={{width: '20%'}}>{item.actual_departure || 'NOT DEPARTED YET'}</span>
-          <span style={{width: '20%'}}>{item.actual_arrival || 'NOT ARRIVED YET'}</span>
+          <span style={{width: '20%'}}>
+            {item.actual_departure 
+              ? <Date dateString={item.actual_departure} /> 
+              : 'TBA'}
+          </span>
+          <span style={{width: '20%'}}>
+          {item.actual_arrival 
+              ? <Date dateString={item.actual_arrival} /> 
+              : 'TBA'}
+          </span>
         </li>
       ))}
     </ul>
