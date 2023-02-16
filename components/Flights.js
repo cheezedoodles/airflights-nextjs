@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import axios from 'axios'
 
-export default function FlightsComponent() {
+export default function Flights() {
   const API_ENDPOINT = `http://127.0.0.1:3001/api/flights`
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json())
@@ -15,7 +15,7 @@ export default function FlightsComponent() {
   return (
     <div>
       {data.map((item) => (
-        <div>
+        <div key={item.flight_id}>
           {item.flight_id} {item.flight_no} {item.departure_airport} {item.arrival_airport}
         </div>
         
