@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import Flights from 'components/Flights'
+import SearchForm from 'components/SearchForm'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,6 +18,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <SearchForm />
         <Flights />
       </main>
     </>
