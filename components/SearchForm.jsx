@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-export default function SearchForm({ updateFlights, flights_data }) {
+export default function SearchForm({ updateFlights, flightsData, fetchedData}) {
   const [searchTerm, setSearchTerm] = useState('')
 
   const searchInputRef = useRef('')
@@ -11,13 +11,13 @@ export default function SearchForm({ updateFlights, flights_data }) {
   }
 
   const onSearchSubmit = (event) => {
-    if (searchInputRef.current) {
-      updateFlights(flights_data.filter((flight) => 
-        flight.flight_no.toLowerCase() === searchInputRef.current.toLowerCase()
+    if (searchInputRef.current && searchTerm) {
+      updateFlights(flightsData.filter((flight) => 
+        flight.flight_no.toLowerCase() === searchInputRef.current.toLowerCase() 
       ))
-      setSearchTerm('')
-      searchInputRef.current = ''
     }
+    setSearchTerm('')
+    searchInputRef.current = ''
     event.preventDefault()
   }
 
@@ -27,6 +27,10 @@ export default function SearchForm({ updateFlights, flights_data }) {
       <input ref={searchInputRef} onChange={onInputChange} value={searchTerm}></input>
       &nbsp;
       <button type="submit">Submit</button>
+      &nbsp;
+      <button 
+        onClick={() => updateFlights(fetchedData)} 
+        type="button">&lt;--</button>
     </form>
   )
 

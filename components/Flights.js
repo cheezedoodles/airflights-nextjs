@@ -26,7 +26,11 @@ export default function Flights() {
 
   return (
     <>
-      <SearchForm updateFlights={setFlightsData} flights_data={data}/>
+      <SearchForm 
+        updateFlights={setFlightsData} 
+        flightsData={flightsData}
+        fetchedData={data}
+      />
       <ul>
         <li className={styles.item}>
           <span style={{width: '20%'}}>flight_no</span>
