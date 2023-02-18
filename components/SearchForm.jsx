@@ -1,7 +1,13 @@
 import { useRef, useState, useEffect } from 'react'
 import useSWR from 'swr'
 
-export default function SearchForm({ searchTerm, handleInputChange, handleSearchSubmit }) {
+export default function SearchForm(
+  { searchTerm, 
+    handleInputChange, 
+    handleSearchSubmit,
+    handleRefillFlights 
+  }) 
+{
 
   const searchInputRef = useRef('')
 
@@ -23,7 +29,7 @@ export default function SearchForm({ searchTerm, handleInputChange, handleSearch
       <button type="submit">Submit</button>
       &nbsp;
       <button 
-        onClick={() => updateFlights(fetchedData)} 
+        onClick={() => handleRefillFlights()} 
         type="button">&lt;--</button>
     </form>
   )

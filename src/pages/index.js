@@ -40,6 +40,7 @@ export default function Home() {
     ref.current = ''
     event.preventDefault()
   }
+  const handleRefillFlights = () => setFlightsData(data)
 
   useEffect(() => {
     setFlightsData(data)
@@ -58,6 +59,7 @@ export default function Home() {
           searchTerm={searchTerm}
           handleInputChange={handleInputChange}
           handleSearchSubmit={handleSearchSubmit}
+          handleRefillFlights={handleRefillFlights}
         />
         <Flights 
           flightsData={flightsData} 
