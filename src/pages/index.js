@@ -24,6 +24,23 @@ export default function Home() {
 
   const { data, error } = useSWR(API_ENDPOINT, fetcher)
 
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value)
+  }
+
+  const handleSearchSubmit = (event, ref) => {
+    if (ref && searchTerm) {
+      setFlightsData(
+        flightsData.filter(
+          (flight) => flight.flight_no.toLowerCase() === ref.current.toLowerCase()
+        )
+      )
+    }
+    setSearchTerm('')
+    ref.current = ''
+    event.preventDefault()
+  }
+
   useEffect(() => {
     setFlightsData(data)
   }, [data])
@@ -37,8 +54,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <SearchForm />
-        <Flights flightsData={flightsData} error={error}/>
+        <SearchForm 
+          searchTerm={searchTerm}
+          handleInputChange={handleInputChange}
+          handleSearchSubmit={handleSearchSubmit}
+        />
+        <Flights 
+          flightsData={flightsData} 
+          error={error}
+        />
       </main>
     </>
   )

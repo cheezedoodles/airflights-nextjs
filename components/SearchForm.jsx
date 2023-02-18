@@ -1,31 +1,24 @@
 import { useRef, useState, useEffect } from 'react'
 import useSWR from 'swr'
 
-export default function SearchForm() {
-  const [searchTerm, setSearchTerm] = useState('')
+export default function SearchForm({ searchTerm, handleInputChange, handleSearchSubmit }) {
 
   const searchInputRef = useRef('')
-  
+
   const onInputChange = (event) => {
-    setSearchTerm(event.target.value)
+    handleInputChange(event)
     searchInputRef.current = event.target.value
   }
 
-  const onSearchSubmit = (event) => {
-    if (searchInputRef.current && searchTerm) {
-      updateFlights(flightsData.filter((flight) => 
-        flight.flight_no.toLowerCase() === searchInputRef.current.toLowerCase() 
-      ))
-    }
-    setSearchTerm('')
-    searchInputRef.current = ''
-    event.preventDefault()
-  }
+  const onSearchSubmit = (event) => handleSearchSubmit(event, searchInputRef)
 
   return (
     <form onSubmit={onSearchSubmit}>
       <strong>Search: </strong>
-      <input ref={searchInputRef} onChange={onInputChange} value={searchTerm}></input>
+      <input 
+        ref={searchInputRef} 
+        onChange={onInputChange} 
+        value={searchTerm}></input>
       &nbsp;
       <button type="submit">Submit</button>
       &nbsp;
