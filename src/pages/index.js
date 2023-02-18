@@ -6,11 +6,12 @@ import useSWR from 'swr'
 
 import SearchForm from 'components/SearchForm'
 import Flights from 'components/Flights'
+import Header from 'components/Header'
 
 import styles from '@/styles/Home.module.css'
 
-
 const inter = Inter({ subsets: ['latin'] })
+
 
 export default function Home() {
 
@@ -55,6 +56,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <Header />
         <SearchForm 
           searchTerm={searchTerm}
           handleInputChange={handleInputChange}

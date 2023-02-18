@@ -1,0 +1,19 @@
+.header {
+  display: flexbox;
+  position: fixed;
+  width: 20%;
+  max-width: 160px;
+  min-width: 140px;
+  max-height: 700px;
+  text-align: center;
+  background-color: #83a4d4;
+  background: linear-gradient(to left, #5091c4, #854c91);
+  top: 0%;
+  left: 0%;
+  padding: 0px;
+}
+
+.h1, .p {
+  line-height: 0px;
+  letter-spacing: 0.15rem;
+}
