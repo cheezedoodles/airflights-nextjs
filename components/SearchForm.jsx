@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import useSWR from 'swr'
 
-export default function SearchForm({ updateFlights, flightsData, fetchedData}) {
+export default function SearchForm() {
   const [searchTerm, setSearchTerm] = useState('')
 
   const searchInputRef = useRef('')

@@ -1,9 +1,14 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-import Flights from 'components/Flights'
+
 import { useState, useEffect } from 'react'
 import useSWR from 'swr'
+
+import SearchForm from 'components/SearchForm'
+import Flights from 'components/Flights'
+
+import styles from '@/styles/Home.module.css'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,6 +18,8 @@ export default function Home() {
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json())
   
+  const [searchTerm, setSearchTerm] = useState('')
+
   const [flightsData, setFlightsData] = useState([])
 
   const { data, error } = useSWR(API_ENDPOINT, fetcher)
@@ -30,6 +37,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <SearchForm />
         <Flights flightsData={flightsData} error={error}/>
       </main>
     </>
