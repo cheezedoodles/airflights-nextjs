@@ -1,14 +1,26 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import Flights from 'components/Flights'
-import SearchForm from 'components/SearchForm'
+import { useState, useEffect } from 'react'
+import useSWR from 'swr'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT
+
+  const fetcher = (...args) => fetch(...args).then((res) => res.json())
+  
+  const [flightsData, setFlightsData] = useState([])
+
+  const { data, error } = useSWR(API_ENDPOINT, fetcher)
+
+  useEffect(() => {
+    setFlightsData(data)
+  }, [data])
+
   return (
     <>
       <Head>
@@ -18,7 +30,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Flights />
+        <Flights flightsData={flightsData} error={error}/>
       </main>
     </>
   )

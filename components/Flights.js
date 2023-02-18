@@ -1,23 +1,7 @@
-import useSWR from 'swr'
-import axios from 'axios'
 import styles from '@/styles/Flights.module.css'
 import Date from './Date'
-import SearchForm from './SearchForm'
-import { useState, useEffect } from 'react'
-import { setISOWeekYear } from 'date-fns'
 
-export default function Flights() {
-  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT
-
-  const fetcher = (...args) => fetch(...args).then((res) => res.json())
-  
-  const [flightsData, setFlightsData] = useState([])
-
-  const { data, error } = useSWR(API_ENDPOINT, fetcher)
-
-  useEffect(() => {
-    setFlightsData(data)
-  }, [data])
+export default function Flights({ flightsData, error }) {
 
   if (error) {
     return <div>{error.message} {error.stack}</div>
@@ -25,12 +9,6 @@ export default function Flights() {
   if (!flightsData) return <div>Loading...</div>  
 
   return (
-    <>
-      <SearchForm 
-        updateFlights={setFlightsData} 
-        flightsData={flightsData}
-        fetchedData={data}
-      />
       <ul>
         <li className={styles.item}>
           <span style={{width: '20%'}}>flight_no</span>
@@ -61,6 +39,5 @@ export default function Flights() {
           </li>
         ))}
       </ul>
-    </>
   )
 }
