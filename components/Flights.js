@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import { setISOWeekYear } from 'date-fns'
 
 export default function Flights() {
-  const API_ENDPOINT = `http://127.0.0.1:3001/api/flights`
+  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json())
   
