@@ -2,8 +2,8 @@
   display: flexbox;
   position: fixed;
   width: 20%;
-  max-width: 160px;
-  min-width: 140px;
+  max-width: 135px;
+  min-width: 135px;
   max-height: 700px;
   text-align: center;
   background-color: #83a4d4;
@@ -15,5 +15,4 @@
 
 .h1, .p {
   line-height: 0px;
-  letter-spacing: 0.15rem;
 }
