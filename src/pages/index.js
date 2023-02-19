@@ -15,15 +15,19 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 
-  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT
+  const [page, setPage] = useState(1)
 
-  const fetcher = (...args) => fetch(...args).then((res) => res.json())
-  
+  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT + `?page=${page}`
+
   const [searchTerm, setSearchTerm] = useState('')
 
-  const [flightsData, setFlightsData] = useState([])
+  const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
-  const { data, error } = useSWR(API_ENDPOINT, fetcher)
+  const { data, isLoading, error } = useSWR(API_ENDPOINT, fetcher)
+
+  const [flightsData, setFlightsData] = useState({flights: [], page: 1, pageCount: 0, lastPage: false})
+
+
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value)
@@ -44,9 +48,11 @@ export default function Home() {
   const handleRefillFlights = () => setFlightsData(data)
 
   useEffect(() => {
-    setFlightsData(data)
+    if (data && !isLoading)
+      setFlightsData({...data, flights: flightsData.flights.concat(data.flights)})
   }, [data])
 
+  if (isLoading || !flightsData) return <div>Loading data...</div>
   return (
     <>
       <Head>
@@ -63,10 +69,14 @@ export default function Home() {
           handleSearchSubmit={handleSearchSubmit}
           handleRefillFlights={handleRefillFlights}
         />
+        {Object.keys(flightsData)}
+        {typeof flightsData}
+        {typeof data}
         <Flights 
           flightsData={flightsData} 
           error={error}
         />
+        <button onClick={() => setPage(page + 1)}>Load more</button>
       </main>
     </>
   )

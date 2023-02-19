@@ -19,7 +19,7 @@ export default function Flights({ flightsData, error }) {
           <span style={{width: '35%'}}>actual_departure</span>
           <span style={{width: '35%'}}>actual_arrival</span>
         </li>
-        {flightsData.map((item) => (
+        {flightsData.flights.map((item) => (
           <li className={styles.item} key={item.flight_id}>
             <span style={{width: '20%'}}>{item.flight_no}</span>
             <span style={{width: '25%'}}>{item.departure_airport}</span>
