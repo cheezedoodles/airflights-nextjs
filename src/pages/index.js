@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import useSWR from 'swr'
 
 import SearchForm from 'components/SearchForm'
@@ -14,6 +14,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 
 export default function Home() {
+
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const [page, setPage] = useState(1)
 
@@ -35,17 +37,22 @@ export default function Home() {
 
   const handleSearchSubmit = (event, ref) => {
     if (ref && searchTerm) {
-      setFlightsData(
-        flightsData.filter(
+      setFlightsData({
+        ...flightsData,
+        flights: flightsData.flights.filter(
           (flight) => flight.flight_no.toLowerCase() === ref.current.toLowerCase()
-        )
-      )
+        ),
+        })
     }
     setSearchTerm('')
     ref.current = ''
+    setIsDisabled(true)
     event.preventDefault()
   }
-  const handleRefillFlights = () => setFlightsData(data)
+  const handleRefillFlights = () => {
+    setFlightsData(data)
+    setIsDisabled(false)
+  }
 
   useEffect(() => {
     if (data && !isLoading)
@@ -69,14 +76,11 @@ export default function Home() {
           handleSearchSubmit={handleSearchSubmit}
           handleRefillFlights={handleRefillFlights}
         />
-        {Object.keys(flightsData)}
-        {typeof flightsData}
-        {typeof data}
         <Flights 
           flightsData={flightsData} 
           error={error}
         />
-        <button onClick={() => setPage(page + 1)}>Load more</button>
+        <button hidden={isDisabled} onClick={() => setPage(page + 1)}>Load more</button>
       </main>
     </>
   )
