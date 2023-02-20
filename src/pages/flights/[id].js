@@ -1,12 +1,14 @@
-import { getFlightsIds, getFlightInfo } from '../../lib/flights'
+import { getFlightsIds, getFlightInfo } from '../../../lib/flights'
 
-export async function getStaticProps({ params }) {
-  const flightInfo = getFlightInfo(params.id)
-  return {
-    props: {
-      flightInfo,
-    },
-  }
+export default function FlightInfo({ flightInfo }) {
+  return (
+    <div>
+      {flightInfo.flightInfo.flight_id}
+      {flightInfo.flightInfo.flight_no}
+      {flightInfo.flightInfo.departure_airport_name}
+      {flightInfo.flightInfo.arrival_airport_name}
+    </div>
+  )
 }
 
 export async function getStaticPaths() {
@@ -18,6 +20,11 @@ export async function getStaticPaths() {
   }
 }
 
-export default function FlightInfo() {
-  return <>hello world</>
+export async function getStaticProps({ params }) {
+  const flightInfo = await getFlightInfo(params.id)
+  return {
+    props: {
+      flightInfo,
+    },
+  }
 }
