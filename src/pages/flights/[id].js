@@ -1,4 +1,4 @@
-import { getFlightsIds } from '../../lib/getFlightsIds'
+import { getFlightsIds } from '../../lib/flights'
 
 export async function getStaticPaths() {
   const paths = await getFlightsIds()
