@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from '@/styles/Flights.module.css'
 import Date from './Date'
 
@@ -21,7 +22,9 @@ export default function Flights({ flightsData, error }) {
         </li>
         {flightsData.flights.map((item) => (
           <li className={styles.item} key={item.flight_id}>
-            <span style={{width: '20%'}}>{item.flight_no}</span>
+            <span style={{width: '20%'}}>
+              <Link href={`/flights/${item.flight_id}`}>{item.flight_no}</Link>
+            </span>
             <span style={{width: '25%'}}>{item.departure_airport}</span>
             <span style={{width: '25%'}}>{item.arrival_airport}</span>
             <span style={{width: '20%'}}>{item.status}</span>
