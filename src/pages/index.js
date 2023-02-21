@@ -99,7 +99,8 @@ export default function Home() {
           handleRefillFlights={handleRefillFlights}
         />
         <Flights 
-          flightsData={flightsData} 
+          flightsData={flightsData}
+          handleRefillFlights={handleRefillFlights}
           error={error}
         />
         <button hidden={isDisabled} onClick={() => setPage(page + 1)}>Load more</button>

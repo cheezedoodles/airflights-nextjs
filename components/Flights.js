@@ -2,7 +2,7 @@ import Link from 'next/link'
 import styles from '@/styles/Flights.module.css'
 import Date from './Date'
 
-export default function Flights({ flightsData, error }) {
+export default function Flights({ flightsData, handleRefillFlights, error }) {
 
   if (error) {
     return <div>{error.message} {error.stack}</div>
@@ -42,7 +42,15 @@ export default function Flights({ flightsData, error }) {
             </span>
           </li>
         ))
-        : <p>Wrong flight number! Press &lt;-- to go back...</p>
+        : (<p>Wrong flight number! 
+            <button 
+              onClick={(event) => {
+                handleRefillFlights()
+                event.preventDefault()
+              }}>
+              Go back
+            </button>
+          </p>)
         }
       </ul>
   )
