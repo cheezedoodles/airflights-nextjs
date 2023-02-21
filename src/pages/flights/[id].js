@@ -1,4 +1,6 @@
 import Date from 'components/Date'
+import Image from 'next/image'
+import chairPic from '../../../public/seat.png'
 
 import { getFlightsIds, getFlightInfo } from '../../../lib/flights'
 
@@ -53,8 +55,28 @@ export default function FlightInfo({ flightInfo }) {
       <div className={styles.seats}>
         {flightInfo.allSeats.map((seat) => (
           (takenSeats.includes(seat.seat_no))
-            ? <button className={styles.seatTaken} key={seat.seat_no}>{seat.seat_no}</button>
-            : <button className={styles.seatFree} key={seat.seat_no}>{seat.seat_no}</button>
+            ? <button 
+                className={styles.seatTaken} 
+                key={seat.seat_no}>
+              {seat.seat_no}
+              <Image
+                src={chairPic} 
+                alt='seat' 
+                width={20}
+                height={20}
+              />
+            </button>
+            : <button 
+                className={styles.seatFree} 
+                key={seat.seat_no}>
+              {seat.seat_no}
+              <Image
+                src={chairPic} 
+                alt='seat' 
+                width={20}
+                height={20}
+              />
+            </button>
         )  
         )}
       </div>
