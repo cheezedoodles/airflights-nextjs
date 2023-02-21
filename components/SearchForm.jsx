@@ -5,7 +5,6 @@ export default function SearchForm(
   { searchTerm, 
     handleInputChange, 
     handleSearchSubmit,
-    handleRefillFlights 
   }) 
 {
 
@@ -27,10 +26,6 @@ export default function SearchForm(
         value={searchTerm}></input>
       &nbsp;
       <button type="submit">Submit</button>
-      &nbsp;
-      <button 
-        onClick={() => handleRefillFlights()} 
-        type="button">&lt;--</button>
     </form>
   )
 

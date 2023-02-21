@@ -42,7 +42,7 @@ export default function Flights({ flightsData, handleRefillFlights, error }) {
             </span>
           </li>
         ))
-        : (<p>Wrong flight number! 
+        : (<p>Wrong flight number!&nbsp;
             <button 
               onClick={(event) => {
                 handleRefillFlights()
