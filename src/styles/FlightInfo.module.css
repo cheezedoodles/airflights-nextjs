@@ -1,4 +1,20 @@
 .seats {
   text-align: center;
   display: inline-block;
+  max-width: 225px;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+}
+
+.seatFree {
+  background-color: #59c562;
+  margin: 2px;
+}
+
+.seatTaken {
+  background-color: #b4474c;
+  margin: 2px;
 }

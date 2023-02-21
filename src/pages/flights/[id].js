@@ -5,9 +5,12 @@ import { getFlightsIds, getFlightInfo } from '../../../lib/flights'
 import styles from '@/styles/FlightInfo.module.css'
 
 export default function FlightInfo({ flightInfo }) {
+  const takenSeats = []
+  flightInfo.takenSeats.map((seat) => takenSeats.push(seat.seat_no))
+
   return (
     <>
-      <div>
+      <div className={styles.info}>
         <table>
           <thead>
            <tr>
@@ -48,8 +51,11 @@ export default function FlightInfo({ flightInfo }) {
         </table>
       </div>
       <div className={styles.seats}>
-        {flightInfo.allSeats.map((seat) => 
-          <button key={seat.seat_no}>{seat.seat_no}</button>
+        {flightInfo.allSeats.map((seat) => (
+          (takenSeats.includes(seat.seat_no))
+            ? <button className={styles.seatTaken} key={seat.seat_no}>{seat.seat_no}</button>
+            : <button className={styles.seatFree} key={seat.seat_no}>{seat.seat_no}</button>
+        )  
         )}
       </div>
     </>
