@@ -12,13 +12,13 @@ export default function Flights({ flightsData, handleRefillFlights, error }) {
   return (
       <ul>
         <li className={styles.item}>
-          <span style={{width: '20%'}}>flight_no</span>
-          <span style={{width: '25%'}}>departure_airport</span>
-          <span style={{width: '25%'}}>arrival_airport</span>
-          <span style={{width: '20%'}}>status</span>
-          <span style={{width: '10%'}}>aircraft_code</span>
-          <span style={{width: '35%'}}>actual_departure</span>
-          <span style={{width: '35%'}}>actual_arrival</span>
+          <span style={{width: '20%'}}>Flight No.</span>
+          <span style={{width: '25%'}}>Departure airport</span>
+          <span style={{width: '25%'}}>Arrival airport</span>
+          <span style={{width: '20%'}}>Status</span>
+          <span style={{width: '10%'}}>Aircraft code</span>
+          <span style={{width: '35%'}}>Actual departure</span>
+          <span style={{width: '35%'}}>Actual arrival</span>
         </li>
         {flightsData.exists
         ? flightsData.flights.map((item) => (
