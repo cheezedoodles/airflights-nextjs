@@ -8,7 +8,7 @@ export default function Flights({ flightsData, error }) {
     return <div>{error.message} {error.stack}</div>
   }
   if (!flightsData) return <div>Loading...</div>  
-
+  console.log(flightsData)
   return (
       <ul>
         <li className={styles.item}>
@@ -20,7 +20,8 @@ export default function Flights({ flightsData, error }) {
           <span style={{width: '35%'}}>actual_departure</span>
           <span style={{width: '35%'}}>actual_arrival</span>
         </li>
-        {flightsData.flights.map((item) => (
+        {flightsData.exists
+        ? flightsData.flights.map((item) => (
           <li className={styles.item} key={item.flight_id}>
             <span style={{width: '20%'}}>
               <Link href={`/flights/${item.flight_id}`}>{item.flight_no}</Link>
@@ -40,7 +41,9 @@ export default function Flights({ flightsData, error }) {
                 : 'TBA'}
             </span>
           </li>
-        ))}
+        ))
+        : <p>Wrong flight number! Press &lt;-- to go back...</p>
+        }
       </ul>
   )
 }

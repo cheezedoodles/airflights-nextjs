@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import useSWR from 'swr'
 
 import SearchForm from 'components/SearchForm'
@@ -19,15 +19,19 @@ export default function Home() {
 
   const [page, setPage] = useState(1)
 
-  const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT + `?page=${page}`
+  const API_FLIGHTS_PAGE = process.env.NEXT_PUBLIC_API_ENDPOINT + `?page=${page}`
 
   const [searchTerm, setSearchTerm] = useState('')
 
+  const [flightNo, setFlightNo] = useState('')
+
+  const API_FLIGHT_SEARCH = process.env.NEXT_PUBLIC_API_ENDPOINT + `/search/${flightNo}/`
+
   const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
-  const { data, isLoading, error } = useSWR(API_ENDPOINT, fetcher)
+  const { data, isLoading, error } = useSWR(API_FLIGHTS_PAGE, fetcher)
 
-  const [flightsData, setFlightsData] = useState({flights: [], page: 1, pageCount: 0, lastPage: false})
+  const [flightsData, setFlightsData] = useState({flights: [], page: 1, pageCount: 0, lastPage: false, exists: false})
 
 
 
@@ -37,12 +41,7 @@ export default function Home() {
 
   const handleSearchSubmit = (event, ref) => {
     if (ref && searchTerm) {
-      setFlightsData({
-        ...flightsData,
-        flights: flightsData.flights.filter(
-          (flight) => flight.flight_no.toLowerCase() === ref.current.toLowerCase()
-        ),
-        })
+      setFlightNo(ref.current.toUpperCase())
     }
     setSearchTerm('')
     ref.current = ''
@@ -51,14 +50,37 @@ export default function Home() {
   }
   const handleRefillFlights = () => {
     setFlightsData(data)
+    setFlightNo('')
     setIsDisabled(false)
   }
 
   useEffect(() => {
-    if (data && !isLoading)
+    if (data && !isLoading) {
+      data.exists = true
       setFlightsData({...data, flights: flightsData.flights.concat(data.flights)})
+    }
   }, [data])
 
+  const handleSearch = useCallback(async () => {
+    if (!flightNo) return
+
+    try {
+      const flightFound = await fetcher(API_FLIGHT_SEARCH)
+      if (flightFound) {
+        setFlightsData({
+          ...flightsData,
+          ...flightFound
+        })
+      }
+    } catch {
+      console.log('handleSearch failed')
+    }
+  }, [flightNo])
+
+  useEffect(() => {
+    handleSearch()
+  }, [handleSearch])
+  
   if (isLoading || !flightsData) return <div>Loading data...</div>
   return (
     <>
